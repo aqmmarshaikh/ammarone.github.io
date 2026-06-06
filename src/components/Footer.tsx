@@ -70,14 +70,14 @@ export default function Footer() {
                 href={siteConfig.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-surface-400 hover:bg-pink-500/20 hover:text-pink-400 transition-all"
+                className="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center text-surface-400 hover:bg-pink-500/20 hover:text-pink-400 transition-all"
                 aria-label="Instagram"
               >
                 <InstagramIcon size={18} />
               </a>
               <a
                 href={`tel:${siteConfig.contact.phone}`}
-                className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-surface-400 hover:bg-green-500/20 hover:text-green-400 transition-all"
+                className="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center text-surface-400 hover:bg-green-500/20 hover:text-green-400 transition-all"
                 aria-label="Phone"
               >
                 <Phone size={18} />
@@ -86,7 +86,7 @@ export default function Footer() {
                 href={siteConfig.location.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-surface-400 hover:bg-blue-500/20 hover:text-blue-400 transition-all"
+                className="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center text-surface-400 hover:bg-blue-500/20 hover:text-blue-400 transition-all"
                 aria-label="Location"
               >
                 <MapPin size={18} />
@@ -167,7 +167,7 @@ export default function Footer() {
           </p>
           <button
             onClick={scrollToTop}
-            className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-surface-400 hover:bg-brand-600/20 hover:text-brand-400 transition-all"
+            className="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center text-surface-400 hover:bg-brand-600/20 hover:text-brand-400 transition-all"
             aria-label="Back to top"
           >
             <ArrowUp size={18} />

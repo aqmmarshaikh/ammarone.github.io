@@ -31,7 +31,7 @@ const LANGUAGES: { code: Lang; flag: string; short: string; full: string }[] = [
   { code: "gu", flag: "🇮🇳", short: "ગુ", full: "ગુજરાતી" },
 ];
 
-function LanguageSwitcher() {
+function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
   const { lang, setLang } = useLanguage();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -44,9 +44,39 @@ function LanguageSwitcher() {
         setOpen(false);
       }
     }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+    if (!mobile) {
+      document.addEventListener("mousedown", handleClick);
+      return () => document.removeEventListener("mousedown", handleClick);
+    }
+  }, [mobile]);
+
+  if (mobile) {
+    return (
+      <div className="flex flex-col space-y-2 mt-2 mb-6">
+        <div className="px-4 text-[10px] font-semibold text-surface-500 uppercase tracking-widest mb-1">
+          Language / भाषा
+        </div>
+        <div className="grid grid-cols-3 gap-2 px-4">
+          {LANGUAGES.map((language) => (
+            <button
+              key={language.code}
+              onClick={() => {
+                setLang(language.code);
+              }}
+              className={`flex flex-col items-center justify-center py-3 rounded-xl border transition-all min-h-[64px] ${
+                lang === language.code
+                  ? "bg-brand-600/20 border-brand-500/50 text-brand-400 shadow-[0_0_15px_rgba(51,120,255,0.1)]"
+                  : "bg-white/5 border-white/5 text-surface-300 hover:bg-white/10 hover:text-white"
+              }`}
+            >
+              <span className="text-xl sm:text-2xl mb-1.5 leading-none">{language.flag}</span>
+              <span className="text-[11px] sm:text-xs font-semibold">{language.short}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={ref} className="relative z-50">
@@ -56,7 +86,7 @@ function LanguageSwitcher() {
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-label="Select language"
-        className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-2 rounded-xl glass-light text-surface-300 hover:text-white hover:border-brand-500/30 transition-all text-sm font-medium min-h-[36px] border border-white/5"
+        className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-2 rounded-xl glass-light text-surface-300 hover:text-white hover:border-brand-500/30 transition-all text-sm font-medium min-h-[44px] border border-white/5"
       >
         <span className="text-base leading-none">{current.flag}</span>
         <span className="font-medium text-xs sm:text-sm">{current.short}</span>
@@ -214,7 +244,9 @@ export default function Navbar() {
 
           {/* Right: Language + CTA + Mobile toggle */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <LanguageSwitcher />
+            <div className="hidden lg:block">
+              <LanguageSwitcher />
+            </div>
 
             <a
               href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(locale.whatsapp.message_general)}`}
@@ -230,7 +262,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 text-surface-300 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+              className="lg:hidden p-2 text-surface-300 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -248,29 +280,36 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden glass border-t border-white/5"
           >
-            <div className="px-4 py-4 space-y-1 max-h-[70vh] overflow-y-auto">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="flex items-center px-4 py-3 min-h-[48px] text-surface-300 hover:text-white hover:bg-white/5 rounded-xl transition-all text-base"
-                >
-                  {link.label}
-                </motion.a>
-              ))}
-              <div className="pt-4 pb-2">
+            <div className="py-4 space-y-1 max-h-[70vh] overflow-y-auto">
+              <LanguageSwitcher mobile />
+              
+              <div className="px-4 text-[10px] font-semibold text-surface-500 uppercase tracking-widest mb-2 mt-4">
+                Menu
+              </div>
+              <div className="px-4 space-y-1">
+                {navLinks.map((link, i) => (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    className="flex items-center px-4 py-3 min-h-[48px] text-surface-300 hover:text-white hover:bg-white/5 rounded-xl transition-all text-base font-medium"
+                  >
+                    {link.label}
+                  </motion.a>
+                ))}
+              </div>
+              <div className="pt-6 pb-2 px-4">
                 <a
                   href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(locale.whatsapp.message_general)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary w-full justify-center"
+                  className="btn-primary w-full justify-center min-h-[48px]"
                 >
                   <span className="flex items-center gap-2 justify-center">
-                    <ShoppingBag size={16} />
+                    <ShoppingBag size={18} />
                     {locale.nav.cta}
                   </span>
                 </a>

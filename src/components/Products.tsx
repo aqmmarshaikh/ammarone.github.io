@@ -96,7 +96,7 @@ export default function Products() {
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-brand-600/90 backdrop-blur-sm text-white rounded-xl font-semibold transition-transform hover:scale-105 text-sm sm:text-base"
+                      className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-brand-600/90 backdrop-blur-sm text-white rounded-xl font-semibold transition-transform hover:scale-105 text-sm sm:text-base min-h-[44px]"
                     >
                       <ShoppingBag size={18} />
                       <span className="hidden sm:inline">{locale.products.enquire}</span>
